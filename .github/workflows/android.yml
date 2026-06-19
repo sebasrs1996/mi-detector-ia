@@ -16,7 +16,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # ESTO REEMPLAZA TODA LA INSTALACIÓN MANUAL REBELDE
     - name: Configurar Gradle de forma Nativa
       uses: gradle/actions/setup-gradle@v4
       with:
