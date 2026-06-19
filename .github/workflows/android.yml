@@ -16,12 +16,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # ESTA ACCION OFICIAL INSTALA Y CORRE GRADLE 8.0.2 CORRECTAMENTE
-    - name: Compilar APK con Gradle Action
+    # Instalamos gradle de forma limpia sin pasarle argumentos incompatibles
+    - name: Configurar Gradle
       uses: gradle/actions/setup-gradle@v4
       with:
         gradle-version: '8.0.2'
-        arguments: :app:assembleDebug
+
+    # Generamos el ejecutable local y compilamos usando comandos estándar
+    - name: Compilar APK
+      run: gradle wrapper && ./gradlew :app:assembleDebug
 
     - name: Subir Archivo APK
       uses: actions/upload-artifact@v4
