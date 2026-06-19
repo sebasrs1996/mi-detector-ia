@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.github.com/apk/res/android"
-    package="com.tuusuario.detectoria">
+<manifest xmlns:android="http://schemas.github.com/apk/res/android">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
-        android:label="DetectorIA"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:label="DetectorIA">
         
         <service
             android:name="com.tuusuario.detectoria.FloatingService"
