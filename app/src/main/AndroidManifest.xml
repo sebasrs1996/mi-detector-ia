@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.github.com/apk/manifest"
+<manifest xmlns:android="http://schemas.github.com/apk/res/android"
     package="com.tuusuario.detectoria">
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -10,8 +10,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         
         <service
-            android:name=".FloatingService"
+            android:name="com.tuusuario.detectoria.FloatingService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 </manifest>
