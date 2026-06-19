@@ -56,10 +56,11 @@ jobs:
         }
         EOF
 
-    - name: Instalar y ejecutar Gradle Wrapper
+    - name: Instalar y ejecutar Gradle Wrapper Moderno
       run: |
         sudo apt-get update && sudo apt-get install -y gradle
-        gradle wrapper
+        # Forzamos a que use la versión de distribución 8.0 requerida
+        gradle wrapper --gradle-version 8.0
         chmod +x ./gradlew
 
     - name: Compilar APK con Gradle Wrapper
