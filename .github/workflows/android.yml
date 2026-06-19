@@ -16,12 +16,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # ESTO GENERA LOS ARCHIVOS DEL WRAPPER QUE LE FALTAN A TU REPOSITORIO
-    - name: Forzar Generacion de Gradle Wrapper
-      run: gradle wrapper --gradle-version 8.0.2
-
-    - name: Compilar APK con Gradle Wrapper
-      run: ./gradlew assembleDebug
+    # ESTA ACCION OFICIAL INSTALA Y CORRE GRADLE 8.0.2 CORRECTAMENTE
+    - name: Compilar APK con Gradle Action
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.0.2'
+        arguments: :app:assembleDebug
 
     - name: Subir Archivo APK
       uses: actions/upload-artifact@v4
