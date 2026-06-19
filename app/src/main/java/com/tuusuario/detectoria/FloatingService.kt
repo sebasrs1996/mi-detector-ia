@@ -5,19 +5,16 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.IBinder
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import java.util.Random
 
 class FloatingService : Service() {
 
-    private lateinitinit var windowManager: WindowManager
-    private lateinitinit var floatingView: View
+    private lateinit var windowManager: WindowManager
+    private lateinit var floatingView: View
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -26,7 +23,6 @@ class FloatingService : Service() {
 
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         
-        // Crear un botón simple de manera dinámica para la simulación
         val button = Button(this).apply {
             text = "🔍 Analizar IA"
             textSize = 14f
@@ -36,7 +32,6 @@ class FloatingService : Service() {
         }
         floatingView = button
 
-        // Configuración de la ventana flotante (Overlay)
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -49,18 +44,16 @@ class FloatingService : Service() {
             y = 300
         }
 
-        // Lógica al presionar el botón flotante
         button.setOnClickListener {
             button.text = "⏳ Escaneando..."
             button.isEnabled = false
 
-            // Simular un retraso de procesamiento de 2 segundos
             button.postDelayed({
                 val random = Random()
                 val esIA = random.nextBoolean()
                 
                 if (esIA) {
-                    val porcentaje = random.nextInt(31) + 70 // Entre 70% y 100%
+                    val porcentaje = random.nextInt(31) + 70
                     Toast.makeText(this, "⚠️ ALERTA: Probabilidad de IA del $porcentaje%", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "✅ Video Seguro: Real / Original", Toast.LENGTH_LONG).show()
