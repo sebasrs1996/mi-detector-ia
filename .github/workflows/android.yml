@@ -16,13 +16,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Configurar Gradle
+    - name: Configurar Gradle de forma Nativa
       uses: gradle/actions/setup-gradle@v4
       with:
         gradle-version: '8.0.2'
 
-    - name: Compilar APK
-      run: gradle assembleDebug
+    # AQUÍ CAMBIAMOS EL COMANDO PARA QUE USE EL WRAPPER LOCAL NATIVO
+    - name: Compilar APK con Gradle
+      run: gradle wrapper && ./gradlew assembleDebug
 
     - name: Subir Archivo APK
       uses: actions/upload-artifact@v4
