@@ -1,0 +1,73 @@
+name: Build Android APK
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Generar archivos base de Gradle
+      run: |
+        cat << 'EOF' > settings.gradle
+        rootProject.name = "DetectorIA"
+        include ':app'
+        EOF
+
+        cat << 'EOF' > build.gradle
+        buildscript {
+            repositories { google(); mavenCentral() }
+            dependencies { 
+                classpath "com.android.tools.build:gradle:8.0.2"
+                classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20" 
+            }
+        }
+        allprojects { repositories { google(); mavenCentral() } }
+        EOF
+
+        cat << 'EOF' > app/build.gradle
+        plugins { 
+            id 'com.android.application'
+            id 'org.jetbrains.kotlin:android' 
+        }
+        android {
+            namespace 'com.tuusuario.detectoria'
+            compileSdk 33
+            defaultConfig { 
+                applicationId "com.tuusuario.detectoria"
+                minSdk 21
+                targetSdk 33
+                versionCode 1
+                versionName "1.0" 
+            }
+        }
+        dependencies { 
+            implementation 'androidx.core:core-ktx:1.9.0'
+            implementation 'androidx.appcompat:appcompat:1.6.1'
+            implementation 'com.google.android.material:material:1.8.0' 
+        }
+        EOF
+
+    - name: Instalar y ejecutar Gradle Wrapper
+      run: |
+        sudo apt-get update && sudo apt-get install -y gradle
+        gradle wrapper
+        chmod +x ./gradlew
+
+    - name: Compilar APK con Gradle Wrapper
+      run: ./gradlew assembleDebug
+
+    - name: Subir Archivo APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: detector-ia-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
