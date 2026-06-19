@@ -16,52 +16,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Configurar Gradle de forma Nativa
+    - name: Configurar Gradle
       uses: gradle/actions/setup-gradle@v4
       with:
         gradle-version: '8.0.2'
 
-    - name: Generar archivos base de Gradle
-      run: |
-        cat << 'EOF' > settings.gradle
-        rootProject.name = "DetectorIA"
-        include ':app'
-        EOF
-
-        cat << 'EOF' > build.gradle
-        buildscript {
-            repositories { google(); mavenCentral() }
-            dependencies { 
-                classpath "com.android.tools.build:gradle:8.0.2"
-                classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20" 
-            }
-        }
-        allprojects { repositories { google(); mavenCentral() } }
-        EOF
-
-        cat << 'EOF' > app/build.gradle
-        apply plugin: 'com.android.application'
-        apply plugin: 'kotlin-android'
-
-        android {
-            namespace 'com.tuusuario.detectoria'
-            compileSdk 33
-            defaultConfig { 
-                applicationId "com.tuusuario.detectoria"
-                minSdk 21
-                targetSdk 33
-                versionCode 1
-                versionName "1.0" 
-            }
-        }
-        dependencies { 
-            implementation 'androidx.core:core-ktx:1.9.0'
-            implementation 'androidx.appcompat:appcompat:1.6.1'
-            implementation 'com.google.android.material:material:1.8.0' 
-        }
-        EOF
-
-    - name: Compilar APK con Gradle Oficial
+    - name: Compilar APK
       run: gradle assembleDebug
 
     - name: Subir Archivo APK
